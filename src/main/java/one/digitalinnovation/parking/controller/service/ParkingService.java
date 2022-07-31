@@ -1,5 +1,6 @@
 package one.digitalinnovation.parking.controller.service;
 
+import one.digitalinnovation.parking.controller.exception.ParkingNotFoundException;
 import one.digitalinnovation.parking.model.Parking;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class ParkingService {
 
-    private static Map<String, Parking> parkingMap = new HashMap();
+    private static final Map<String, Parking> parkingMap = new HashMap();
 
     static {
         var id = getUUID();
@@ -33,7 +34,11 @@ public class ParkingService {
     }
 
     public Parking findById(String id) {
-        return parkingMap.get(id);
+        Parking parking = parkingMap.get(id);
+        if (parking == null) {
+            throw new ParkingNotFoundException(id);
+        }
+        return parking;
     }
 
     public Parking create(Parking parking) {
