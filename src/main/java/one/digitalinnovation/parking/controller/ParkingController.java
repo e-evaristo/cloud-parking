@@ -49,4 +49,20 @@ public class ParkingController {
         ParkingDTO resultDTO = parkingMapper.toParkingDTO(result);
         return ResponseEntity.status(HttpStatus.CREATED).body(resultDTO);
     }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete parking")
+    public ResponseEntity delete(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Update parking")
+    public ResponseEntity<ParkingDTO> update(@PathVariable String id, @RequestBody ParkingDTO parkingDTO) {
+        Parking parking = parkingMapper.toParking(parkingDTO);
+        Parking result = service.update(id, parking);
+        ParkingDTO resultDTO = parkingMapper.toParkingDTO(result);
+        return ResponseEntity.ok(resultDTO);
+    }
 }

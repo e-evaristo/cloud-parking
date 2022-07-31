@@ -47,4 +47,19 @@ public class ParkingService {
         parkingMap.put(parking.getId(), parking);
         return parking;
     }
+
+    public void delete(String id) {
+        findById(id);
+        parkingMap.remove(id);
+    }
+
+    public Parking update(String id, Parking parking) {
+        Parking parkingOld = findById(id);
+        parkingOld.setLicense(parking.getLicense());
+        parkingOld.setState(parking.getState());
+        parkingOld.setModel(parking.getModel());
+        parkingOld.setColor(parking.getColor());
+        parkingMap.replace(id, parkingOld);
+        return parkingOld;
+    }
 }
