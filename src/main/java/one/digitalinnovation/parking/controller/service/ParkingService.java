@@ -16,8 +16,11 @@ public class ParkingService {
 
     static {
         var id = getUUID();
+        var id1 = getUUID();
         Parking parking = new Parking(id, "ABC-1234", "SP", "Fusca", "Preto");
-        parkingMap.put(parking.getId(), parking);
+        Parking parking1 = new Parking(id, "AAA-0909", "PB", "VW Gol", "Prata");
+        parkingMap.put(id, parking);
+        parkingMap.put(id1, parking1);
     }
 
     public List<Parking> fidAll() {
@@ -27,5 +30,16 @@ public class ParkingService {
 
     private static String getUUID() {
         return java.util.UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public Parking findById(String id) {
+        return parkingMap.get(id);
+    }
+
+    public Parking create(Parking parking) {
+        parking.setId(getUUID());
+        parking.setEntryDate(LocalDateTime.now());
+        parkingMap.put(parking.getId(), parking);
+        return parking;
     }
 }

@@ -19,4 +19,8 @@ public class ParkingMapper {
     public List<ParkingDTO> toParkingDTOList(List<Parking> parkingList) {
         return parkingList.stream().map(this::toParkingDTO).collect(Collectors.toList());
     }
+
+    public Parking toParking(ParkingDTO parkingDTO) {
+        return modelMapper.map(parkingDTO, Parking.class);
+    }
 }
