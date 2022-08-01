@@ -16,8 +16,8 @@ public class ParkingService {
     private static final Map<String, Parking> parkingMap = new HashMap();
 
     static {
-        var id = getUUID();
-        var id1 = getUUID();
+        String id = getUUID();
+        String id1 = getUUID();
         Parking parking = new Parking(id, "ABC-1234", "SP", "Fusca", "Preto");
         Parking parking1 = new Parking(id, "AAA-0909", "PB", "VW Gol", "Prata");
         parkingMap.put(id, parking);
@@ -27,10 +27,6 @@ public class ParkingService {
     public List<Parking> fidAll() {
         return parkingMap.values().stream().collect(Collectors.toList());
 
-    }
-
-    private static String getUUID() {
-        return java.util.UUID.randomUUID().toString().replace("-", "");
     }
 
     public Parking findById(String id) {
@@ -61,5 +57,17 @@ public class ParkingService {
         parkingOld.setColor(parking.getColor());
         parkingMap.replace(id, parkingOld);
         return parkingOld;
+    }
+
+    public Parking exit(String id) {
+        Parking parking = findById(id);
+        parking.setExitDate(LocalDateTime.now());
+        /*TODO Calcular valor*/
+        parkingMap.replace(id, parking);
+        return parking;
+    }
+
+    private static String getUUID() {
+        return java.util.UUID.randomUUID().toString().replace("-", "");
     }
 }

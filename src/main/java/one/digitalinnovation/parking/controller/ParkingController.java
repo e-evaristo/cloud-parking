@@ -27,7 +27,7 @@ public class ParkingController {
 
     @GetMapping
     @ApiOperation(value = "Find all parkings")
-    public ResponseEntity<List<ParkingDTO>> fidAll() {
+    public ResponseEntity<List<ParkingDTO>> findAll() {
         List<Parking> parkingList = service.fidAll();
         List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
         return ResponseEntity.ok(result);
@@ -64,5 +64,12 @@ public class ParkingController {
         Parking result = service.update(id, parking);
         ParkingDTO resultDTO = parkingMapper.toParkingDTO(result);
         return ResponseEntity.ok(resultDTO);
+    }
+
+    @PostMapping("/{id}")
+    @ApiOperation(value = "Exit parking")
+    public ResponseEntity<ParkingDTO> exit(@PathVariable String id) {
+        Parking result = service.exit(id);
+        return ResponseEntity.ok(parkingMapper.toParkingDTO(result));
     }
 }
