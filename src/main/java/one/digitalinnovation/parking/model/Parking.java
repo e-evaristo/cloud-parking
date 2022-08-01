@@ -2,10 +2,14 @@ package one.digitalinnovation.parking.model;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Data
+@Entity
 public class Parking {
+    @Id
     private String id;
     private String license;
     private String state;

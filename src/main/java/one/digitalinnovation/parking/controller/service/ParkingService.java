@@ -2,51 +2,40 @@ package one.digitalinnovation.parking.controller.service;
 
 import one.digitalinnovation.parking.controller.exception.ParkingNotFoundException;
 import one.digitalinnovation.parking.model.Parking;
+import one.digitalinnovation.parking.repository.ParkingRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ParkingService {
 
-    private static final Map<String, Parking> parkingMap = new HashMap();
+    private final ParkingRepository repository;
 
-    static {
-        String id = getUUID();
-        String id1 = getUUID();
-        Parking parking = new Parking(id, "ABC-1234", "SP", "Fusca", "Preto");
-        Parking parking1 = new Parking(id, "AAA-0909", "PB", "VW Gol", "Prata");
-        parkingMap.put(id, parking);
-        parkingMap.put(id1, parking1);
+    public ParkingService(ParkingRepository repository) {
+        this.repository = repository;
     }
 
     public List<Parking> fidAll() {
-        return parkingMap.values().stream().collect(Collectors.toList());
+        return repository.findAll();
 
     }
 
     public Parking findById(String id) {
-        Parking parking = parkingMap.get(id);
-        if (parking == null) {
-            throw new ParkingNotFoundException(id);
-        }
-        return parking;
+        return repository.findById(id).orElseThrow(() -> new ParkingNotFoundException(id));
     }
 
     public Parking create(Parking parking) {
         parking.setId(getUUID());
         parking.setEntryDate(LocalDateTime.now());
-        parkingMap.put(parking.getId(), parking);
+        repository.save(parking);
         return parking;
     }
 
     public void delete(String id) {
         findById(id);
-        parkingMap.remove(id);
+        repository.deleteById(id);
     }
 
     public Parking update(String id, Parking parking) {
@@ -55,7 +44,7 @@ public class ParkingService {
         parkingOld.setState(parking.getState());
         parkingOld.setModel(parking.getModel());
         parkingOld.setColor(parking.getColor());
-        parkingMap.replace(id, parkingOld);
+        repository.save(parkingOld);
         return parkingOld;
     }
 
@@ -63,7 +52,7 @@ public class ParkingService {
         Parking parking = findById(id);
         parking.setExitDate(LocalDateTime.now());
         /*TODO Calcular valor*/
-        parkingMap.replace(id, parking);
+        repository.save(parking);
         return parking;
     }
 
