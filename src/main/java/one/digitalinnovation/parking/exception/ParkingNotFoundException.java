@@ -1,4 +1,4 @@
-package one.digitalinnovation.parking.controller.exception;
+package one.digitalinnovation.parking.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

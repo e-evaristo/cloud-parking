@@ -3,7 +3,7 @@ package one.digitalinnovation.parking.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import one.digitalinnovation.parking.controller.mapper.ParkingMapper;
-import one.digitalinnovation.parking.controller.service.ParkingService;
+import one.digitalinnovation.parking.service.ParkingService;
 import one.digitalinnovation.parking.dto.ParkingDTO;
 import one.digitalinnovation.parking.model.Parking;
 import org.springframework.http.HttpStatus;
